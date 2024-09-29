@@ -2,44 +2,88 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Полноэкранный режим</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, mini-scale=1.0">
+    <title>Заполнить информацию о больничном</title>
     <style>
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #282c34;
-            color: white;
-            font-size: 2rem;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f0f0f0;
         }
-        button {
-            padding: 10px 20px;
-            font-size: 1rem;
-            cursor: pointer;
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
-    <div>
-        <h1>Добро пожаловать в полноэкранный режим!</h1>
-        <button id="fullscreen-btn">Запустить в полноэкранном режиме</button>
-    </div>
 
-    <script>
-        document.getElementById('fullscreen-btn').addEventListener('click', function() {
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen();
-            } else if (document.documentElement.mozRequestFullScreen) { // Firefox
-                document.documentElement.mozRequestFullScreen();
-            } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
-                document.documentElement.webkitRequestFullscreen();
-            } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-                document.documentElement.msRequestFullscreen();
+<h1>Заполнить информацию о больничном</h1>
+<form id="sickLeaveForm">
+    <label for="name">Имя:</label>
+    <input type="text" id="name" required>
+
+    <label for="startDate">Начало больничного:</label>
+    <input type="date" id="startDate" required>
+
+    <label for="endDate">Окончание больничного:</label>
+    <input type="date" id="endDate" required>
+
+    <label for="sickLeaveNumber">Номер больничного:</label>
+    <input type="text" id="sickLeaveNumber" required>
+
+    <button type="submit">Отправить</button>
+</form>
+
+<script>
+    document.getElementById('sickLeaveForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Получаем данные из полей формы
+        const name = document.getElementById('name').value;
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+        const sickLeaveNumber = document.getElementById('sickLeaveNumber').value;
+
+        // Здесь нужно заменить YOUR_BOT_TOKEN и YOUR_CHAT_ID на данные вашего бота
+        const botToken = '7194419868:AAFUOEqF3L_o0e8-2M4YSUAiWC4W4OltJgY';
+        const chatId = -4539380518;
+
+        // Формируем сообщение
+        const message = `Имя: ${name}\nНачало больничного: ${startDate}\nОкончание больничного: ${endDate}\nНомер больничного: ${sickLeaveNumber}`;
+
+        // Отправка сообщения в Telegram
+        fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                chat_id: chatId,
+                text: message,
+                parse_mode: 'HTML'
+            })
+        }).then(response => {
+            if (response.ok) {
+                alert('Данные успешно отправлены!');
+                document.getElementById('sickLeaveForm').reset();
+            } else {
+                alert('Ошибка при отправке данных');
             }
+        }).catch(error => {
+            console.error('Ошибка:', error);
+            alert('Ошибка при отправке данных');
         });
-    </script>
+    });
+</script>
+
 </body>
 </html>
