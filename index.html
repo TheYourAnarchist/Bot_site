@@ -46,13 +46,10 @@
     <button type="submit">Отправить</button>
 </form>
 
+<script src="https://telegram.org/js/telegram-web-app.js"> </script>
+
 <script>
-    src="https://telegram.org/js/telegram-web-app.js">
-    document.addEventListener('DOMContentLoaded', function () {
-       if (window.Telegram && window.Telegram.WebApp) {
-           window.Telegram.WebApp.expand();
-       }
-   });
+    window.Telegram.WebApp.expand()
     document.getElementById('sickLeaveForm').addEventListener('submit', function(event) {
         event.preventDefault();
 
