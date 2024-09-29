@@ -50,7 +50,7 @@
 
 <script>
     tg = window.Telegram.WebApp;
-    tg.expand()
+    tg.expand();
     document.getElementById('sickLeaveForm').addEventListener('submit', function(event) {
         event.preventDefault();
 
@@ -80,7 +80,9 @@
             })
         }).then(response => {
             if (response.ok) {
-                tg.close()
+                alert('Данные успешно отправлены!');
+                document.getElementById('sickLeaveForm').reset();
+                tg.close();
             } else {
                 alert('Ошибка при отправке данных');
             }
