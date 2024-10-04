@@ -18,7 +18,8 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         input, button {
-            width: 100%;
+            -webkit-min-logical-width: calc(100% - 5px);
+            min-width: calc(100% - 5px);
             margin: 10px 0;
             padding: 10px;
             font-size: 16px;
